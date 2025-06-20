@@ -1,0 +1,16 @@
+name = "wercng"
+license = "UNLICENSE"
+licenselink = "https://github.com/renehsz/hugo-theme-wercng/blob/master/LICENSE"
+description = "Hugo theme based on Werc"
+tags = ["werc", "plan9", "9front", "cat-v", "acme", "minimalist", "simple", "clean", "hierarchy"]
+features = ["hierarchy"]
+
+[author]
+  name = "René Hickersberger"
+  homepage = "https://renehsz.com/"
+
+[original]
+  name = "werc"
+  homepage = "http://werc.cat-v.org/"
+  repo = "git://shithub.us/sl/werc"
+

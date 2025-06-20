@@ -1,0 +1,19 @@
+<nav>
+    <div class="left">
+        {{ partial "menu.html" (dict "menuID" "topnav-left" "page" .) }}
+    </div>
+    <div class="right">
+        {{ partial "menu.html" (dict "menuID" "topnav-right" "page" .) }}
+    </div>
+</nav>
+<h1>
+    <a href="/">
+        {{ with site.Params.logo }}
+            <img alt="Logo" type="image/svg+xml" src="{{ (resources.Get .).RelPermalink }}" />
+        {{ end }}
+        {{ site.Title }}
+        {{ with site.Params.slogan }}
+            <span>{{ . }}</span>
+        {{ end }}
+    </a>
+</h1>

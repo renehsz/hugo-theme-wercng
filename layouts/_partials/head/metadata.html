@@ -1,0 +1,38 @@
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="{{ site.Title }}" />
+
+<link rel="sitemap" type="application/xml" title="Sitemap" href="{{ "/sitemap.xml" | absURL }}" />
+
+{{ if or .Draft .Params.noindex }}
+    <meta name="robots" content="noindex" />
+{{ end }}
+
+{{ if .IsHome }}
+	{{/* Homepage */}}
+
+    {{ with site.Params.description }}
+        <meta name="description" content="{{ . }}" />
+    {{ end }}
+
+    {{/* RSS feed */}}
+    <link rel="alternate" type="application/rss+xml" title="{{ site.Title }} - RSS Feed" href="{{ "/index.xml" | absURL }}" />
+
+{{ else }}
+	{{/* Another page, not homepage */}}
+
+    {{ with or .Description .Summary site.Params.description }}
+        <meta name="description" content="{{ . }}" />
+    {{ end }}
+
+    {{/* Use .Keywords, .Params.keywords, or tags. */}}
+    {{ $keywords := or .Keywords .Params.keywords .Params.tags slice }}
+    {{ if gt (len $keywords) 0 }}
+        <meta name="keywords" content="{{ range $i, $e := $keywords }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}" />
+    {{ end }}
+
+    {{ with .Params.author }}
+        <meta name="author" content="{{ . }}" />
+    {{ end }}
+
+{{ end }}
+

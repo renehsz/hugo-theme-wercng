@@ -1,0 +1,17 @@
+{{ define "main" }}
+    {{ with .Title }}
+        <h1>{{ . }}</h1>
+    {{ end }}
+    {{ .Content }}
+	{{ $iAmHidden := .Params.hiddenfromplainsight }}
+    {{ if gt (len site.RegularPages) 0 }}
+        <ul>
+            {{ range site.RegularPages }}
+				{{ if and (not $iAmHidden) (or .Draft .Params.hiddenfromplainsight .Parent.Params.hiddenfromplainsight .Parent.Parent.Params.hiddenfromplainsight) }}
+					{{ continue }}
+				{{ end }}
+				<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+            {{ end }}
+        </ul>
+    {{ end }}
+{{ end }}

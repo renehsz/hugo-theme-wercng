@@ -1,0 +1,80 @@
+{{- /*
+Renders a navigation tree for the given current page.
+
+@context {page} page The current (active) page.
+
+@example: {{ partial "navtree.html" (dict "page" .) }}
+*/}}
+
+{{ $current := .page }}
+{{ $maxDepthDown := $current.Params.sidebarDepthDown }}
+{{ if not (isset $current.Params "sidebardepthdown") }}
+    {{ $maxDepthDown = 10000 }}
+{{ end }}
+
+{{/* 1. List the parent hierarchy (home -> ... -> immediate parent) */}}
+{{ $ancestors := (collections.Last
+        (math.Max 0 (sub (len $current.Ancestors) 1))
+        $current.Ancestors.Reverse
+    ) }}
+{{ range $parent := $ancestors }}
+	<ul>
+		<li class="sidebar-parent">
+			<a class="active" href="{{ $parent.RelPermalink }}">{{ $parent.LinkTitle }}/</a>
+		</li>
+{{ end }}
+
+{{/* 2. List the current section/page and its descendants */}}
+
+        {{ if $current.IsHome }}
+            {{ partial "inline/navtree/recurse.html"
+                (dict "page" $current "depth" 0 "maxdepth" $maxDepthDown) }}
+        {{ else }}
+            <ul>
+                <li>
+                    <a class="active" href="{{ .RelPermalink }}">
+                        {{ $current.LinkTitle }}
+                        {{- if or (gt (len $current.Sections) 0) (gt (len $current.RegularPages) 0) -}}/{{- end -}}
+                    </a>
+                    {{ partial "inline/navtree/recurse.html"
+                        (dict "page" $current "depth" 1 "maxdepth" $maxDepthDown) }}
+                </li>
+            </ul>
+        {{ end }}
+
+{{/* 3. Close list from parent */}}
+{{ range $parent := $ancestors }}
+	</ul>
+{{ end }}
+
+{{- define "_partials/inline/navtree/recurse.html" }}
+    {{ $page := .page }}
+    {{ $depth := .depth }}
+    {{ $maxdepth := .maxdepth }}
+	{{ if and (le $depth $maxdepth) (or (gt (len $page.Sections) 0) (gt (len $page.RegularPages) 0)) }}
+		<ul>
+			{{/* 1. List all subsections */}}
+			{{ range $page.Sections }}
+				{{ if or .Draft .Params.hiddenfromplainsight }}
+					{{ continue }}
+				{{ end }}
+				<li>
+					<a href="{{ .RelPermalink }}">{{ .LinkTitle }}/</a>
+                    {{ partial "inline/navtree/recurse.html"
+                        (dict "page" . "depth" (add $depth 1) "maxdepth" $maxdepth) }}
+				</li>
+			{{ end }}
+
+			{{/* 2. List all subpages */}}
+            {{ range $page.RegularPages.ByWeight }}
+				{{ if or .Draft .Params.hiddenfromplainsight }}
+					{{ continue }}
+				{{ end }}
+                <li>
+                    <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+                </li>
+            {{ end }}
+		</ul>
+	{{ end }}
+{{- end }}
+

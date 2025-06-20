@@ -1,0 +1,38 @@
+* { cursor: url(/img/cursor.png), auto; }
+body { font-family: Helvetica, Verdana, Arial, 'Liberation Sans', FreeSans, sans-serif; }
+nav a { color: inherit; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* header and top bar */
+header>nav { background-color: rgb(100,135,220); color: white; padding: 0.3em; border-bottom: 2px solid black; font-size: 91%; text-transform: lowercase; }
+header>h1 { background-color: #d7d7d7; color: black; margin: 0; border-bottom: 2px solid black; font-weight: normal; padding: 0.25ex; font-size: 233%; }
+
+/* sidebar */
+aside { border-right: 1px solid #ddd; padding: 0;  } 
+aside>nav { border-bottom: 1px solid #ddd; } 
+aside>nav a { color: rgb(0, 102, 204); border-left: transparent solid 0.2em; display: block; text-transform: capitalize; font-weight: bold; padding: 0.25em 1ex 0.25em 2mm; font-size: 102%} 
+aside>nav a:hover { color: white; background-color: rgb(100,135,220); border-left: black solid 0.2em; text-decoration: none; }
+aside>nav p { font-weight: bold; margin: 0 0 0.5em 2mm; padding: 1em 0 0 0; }
+aside>nav a.active { color: black; font-style: italic; }
+
+/* article */
+article { padding: 0.5ex 1vw 5vh 1vw;  }
+article h1, article h2 { color: rgb(0,102,204); font-weight: bold; margin: 2em 0 0 0; border-bottom: 2px solid rgb(0,102,204); }
+article h3, article h4, article h5 { color: rgb(0,102,204); font-weight: bold; margin: 2em 0 0 0; }
+article h6, article h7, article h8 { color: rgb(0,102,204); font-weight: bold; margin: 2em 0 0 0; }
+article h1>a, article h2>a, article h3>a, article h4>a, article h5>a, article h6>a, article h7>a, article h8>a { text-decoration: none !important; }
+article a { color: rgb(0,102,204); }
+article a:hover { color: rgb(100,135,220); }
+article pre { font-size: 1.2em; }
+
+/* footer */
+footer { color: white; background-color: rgb(100,135,220); }
+footer a { color: inherit; }
+footer div { padding: 1em; }
+
+/* tables */
+table { border: 1px solid rgba(128,128,128,0.5); padding: 0; }
+th { color: white; background-color: rgb(100,135,220); }
+tr:nth-child(odd) { background-color: rgba(128,128,128,0.1)  }
+

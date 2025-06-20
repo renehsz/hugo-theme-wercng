@@ -1,0 +1,18 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
+
+{{/* Styles and Scripts */}}
+{{ partialCached "head/css.html" . }}
+{{ partialCached "head/js.html" . }}
+
+{{/* Misc Metadata */}}
+{{ partial "head/metadata.html" . }}
+
+{{/* OpenGraph (OG) Meta Tags for maximum compatibility, see https://getoutofmyhead.dev/link-preview-meta-tags/#open-graph-tags-are-the-clear-winner */}}
+{{ partial "head/opengraph.html" . }}
+
+{{/* Schema.org JSON-ld for structured data markup because Google Search likes it, see https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data */}}
+{{ partial "head/site_schema.html" . }}
+
+
