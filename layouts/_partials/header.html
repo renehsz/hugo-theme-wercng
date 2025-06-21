@@ -8,12 +8,12 @@
 </nav>
 <h1>
     <a href="/">
-        {{ with site.Params.logo }}
-            <img alt="Logo" type="image/svg+xml" src="{{ (resources.Get .).RelPermalink }}" />
-        {{ end }}
-        {{ site.Title }}
-        {{ with site.Params.slogan }}
+        {{- with site.Params.logo | strings.TrimSpace }}
+            <img alt="Logo" fetchpriority="high" src="{{ (resources.Get . | fingerprint).RelPermalink }}" />
+        {{- end }}
+        {{- site.Title }}
+        {{- with site.Params.slogan }}
             <span>{{ . }}</span>
-        {{ end }}
+        {{- end }}
     </a>
 </h1>
