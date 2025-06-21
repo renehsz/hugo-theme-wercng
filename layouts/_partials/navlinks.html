@@ -1,0 +1,41 @@
+{{- /*
+Renders navigation links for the given menu ID.
+Children of menu items are ignored.
+
+@context {page} page The current page.
+@context {string} menuID The menu ID.
+
+@example: {{ partial "navlinks.html" (dict "menuID" "main" "page" .) }}
+*/}}
+
+{{- $page := .page }}
+{{- $menuEntries := index site.Menus .menuID }}
+
+{{- range $i, $item := $menuEntries }}{{ with $item }}
+    {{- $attrs := dict "href" .URL }}
+
+    {{- if $page.IsMenuCurrent .Menu . }}
+        {{- $attrs = merge $attrs (dict "class" "active" "aria-current" "page") }}
+    {{- else if $page.HasMenuCurrent .Menu .}}
+        {{- $attrs = merge $attrs (dict "class" "ancestor" "aria-current" "true") }}
+    {{- end }}
+
+    {{- $name := .Name }}
+    {{- with .Identifier }}
+        {{- with T . }}
+            {{- $name = . }}
+        {{- end }}
+    {{- end }}
+
+    {{ if gt $i 0 }}
+    |
+    {{ end }}
+    <a
+        {{- range $k, $v := $attrs }}
+            {{- with $v }}
+                {{- printf " %s=%q" $k $v | safeHTMLAttr }}
+            {{- end }}
+        {{- end -}}
+    >{{ $name | strings.ToLower }}</a>
+{{- end }}{{- end }}
+
