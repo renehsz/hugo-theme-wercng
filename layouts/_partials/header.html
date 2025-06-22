@@ -9,7 +9,7 @@
 <h1>
     <a href="/">
         {{- with site.Params.logo | strings.TrimSpace }}
-            <img alt="Logo" fetchpriority="high" src="{{ (resources.Get . | fingerprint).RelPermalink }}" />
+            <img alt="{{ or site.Params.logoAltText "Logo" }}" fetchpriority="high" src="{{ (resources.Get . | fingerprint).RelPermalink }}" />
         {{- end }}
         {{- site.Title }}
         {{- with site.Params.slogan }}
